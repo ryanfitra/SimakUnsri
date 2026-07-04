@@ -669,11 +669,27 @@ class YudisiumController extends Controller
 
         $wisuda = Wisuda::where('id_registrasi_mahasiswa', $id_reg)->first();
 
-        $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
-                ->where('id_aktivitas', $wisuda->id_aktivitas)
+        if(!$wisuda->id_aktivitas){
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                ->whereHas('bimbing_mahasiswa', function ($query) {
+                        $query->whereNotNull('id_bimbing_mahasiswa');
+                    })
+                ->whereHas('anggota_aktivitas_personal', function ($query) use ($riwayat_pendidikan) {
+                        $query->where('nim', $riwayat_pendidikan->nim);
+                    })
+                ->whereHas('nilai_konversi', function ($query) {
+                        $query->where('nilai_indeks', '>', 0.00);
+                    })
+                // ->where('id_prodi', $riwayat_pendidikan->id_prodi)
+                ->whereIn('id_jenis_aktivitas', ['1', '3', '4', '22'])
                 ->orderByDesc('id_semester') // aktivitas terakhir
                 ->first();
-
+        }else{
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                    ->where('id_aktivitas', $wisuda->id_aktivitas)
+                    ->orderByDesc('id_semester') // aktivitas terakhir
+                    ->first();
+        }
         // dd($aktivitas);
         
         return view('mahasiswa.kelulusan.yudisium.data-tugas-akhir', [
@@ -711,10 +727,27 @@ class YudisiumController extends Controller
 
         $wisuda = Wisuda::where('id_registrasi_mahasiswa', $id_reg)->first();
 
-        $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
-                ->where('id_aktivitas', $wisuda->id_aktivitas)
+        if(!$wisuda->id_aktivitas){
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                ->whereHas('bimbing_mahasiswa', function ($query) {
+                        $query->whereNotNull('id_bimbing_mahasiswa');
+                    })
+                ->whereHas('anggota_aktivitas_personal', function ($query) use ($riwayat_pendidikan) {
+                        $query->where('nim', $riwayat_pendidikan->nim);
+                    })
+                ->whereHas('nilai_konversi', function ($query) {
+                        $query->where('nilai_indeks', '>', 0.00);
+                    })
+                // ->where('id_prodi', $riwayat_pendidikan->id_prodi)
+                ->whereIn('id_jenis_aktivitas', ['1', '3', '4', '22'])
                 ->orderByDesc('id_semester') // aktivitas terakhir
                 ->first();
+        }else{
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                    ->where('id_aktivitas', $wisuda->id_aktivitas)
+                    ->orderByDesc('id_semester') // aktivitas terakhir
+                    ->first();
+        }
 
         DB::beginTransaction();
 
@@ -955,7 +988,8 @@ class YudisiumController extends Controller
         //DATA TUGAS AKHIR START
         $bku_prodi = BkuProgramStudi::where('id_prodi', $riwayat_pendidikan->id_prodi)->get();
 
-        $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+        if(!$wisuda->id_aktivitas){
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
                 ->whereHas('bimbing_mahasiswa', function ($query) {
                         $query->whereNotNull('id_bimbing_mahasiswa');
                     })
@@ -969,6 +1003,12 @@ class YudisiumController extends Controller
                 ->whereIn('id_jenis_aktivitas', ['1', '3', '4', '22'])
                 ->orderByDesc('id_semester') // aktivitas terakhir
                 ->first();
+        }else{
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                    ->where('id_aktivitas', $wisuda->id_aktivitas)
+                    ->orderByDesc('id_semester') // aktivitas terakhir
+                    ->first();
+        }
         //DATA TUGAS AKHIR END
 
 
@@ -1135,7 +1175,8 @@ class YudisiumController extends Controller
         // VALIDASI AKTIVITAS TUGAS AKHIR
         // ===============================
 
-        $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+        if(!$wisuda->id_aktivitas){
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
                 ->whereHas('bimbing_mahasiswa', function ($query) {
                         $query->whereNotNull('id_bimbing_mahasiswa');
                     })
@@ -1149,6 +1190,12 @@ class YudisiumController extends Controller
                 ->whereIn('id_jenis_aktivitas', ['1', '3', '4', '22'])
                 ->orderByDesc('id_semester') // aktivitas terakhir
                 ->first();
+        }else{
+            $aktivitas = AktivitasMahasiswa::with(['anggota_aktivitas_personal', 'bimbing_mahasiswa', 'nilai_konversi'])
+                    ->where('id_aktivitas', $wisuda->id_aktivitas)
+                    ->orderByDesc('id_semester') // aktivitas terakhir
+                    ->first();
+        }
 
 
         // 2 SYARAT AKTIVITAS
