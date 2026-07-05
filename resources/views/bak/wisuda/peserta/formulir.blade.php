@@ -45,7 +45,9 @@
             <tr>
                 <td>Jurusan / Program Studi </td>
                 <td style="padding-left:40px; padding-right:20px">:</td>
-                <td>{{Str::upper($riwayat->prodi->nama_program_studi)}}</td>
+                <td>
+                    {{Str::upper($riwayat->prodi->nama_jenjang_pendidikan)}} - {{Str::upper($riwayat->prodi->nama_program_studi)}}
+                </td>
             </tr>
             <tr>
                 <td>Tempat Kuliah</td>
