@@ -14,7 +14,7 @@
     <hr>
 </div>
 <div class="container-fluid table-responsive ml-3">
-    <center>No. Registrasi: <strong></strong></center>
+    <center>No. Registrasi: <strong>{{$data->id}}</strong></center>
     <div style="font-size: 12px">
         <div class="" style="margin-top: 20px">
             Yth. Rektor
@@ -182,7 +182,9 @@
     </div>
 </div>
 <div class="page-break"></div>
-<div class="container-fluid">
+
+<!-- BIODATA AKADEMIK ALUMNI -->
+<!-- <div class="container-fluid">
     <table style="width: 100%">
         <tr>
             <td style="text-align:right; padding-left:20px; padding-right:-50px">
@@ -331,8 +333,10 @@
         </div>
     </div>
 </div>
-<div class="page-break"></div>
-<div class="container-fluid" style="padding-left: 40px; padding-right: 40px">
+<div class="page-break"></div> -->
+
+<!-- DATA ALUMNI -->
+<!-- <div class="container-fluid" style="padding-left: 40px; padding-right: 40px">
     <div class="text-center">
         <h3 style="border: 3px solid; padding: 10px">
             DATA ALUMNI<br>
@@ -390,7 +394,9 @@
         </table>
     </div>
 </div>
-<div class="page-break"></div>
+<div class="page-break"></div> -->
+
+<!-- CHECKLIST BERKAS PERSYARATAN WISUDA -->
 <div class="container-fluid" style="font-size: 12px">
     <div class="text-center">
         <h2>
@@ -405,19 +411,21 @@
                     <img src="{{public_path('images/unsri.png')}}" alt="unsri" style="width: 80px">
                 </td>
                 <td style="width:20%">NAMA</td>
-                <td style="width:60%; border: 1px solid;"></td>
+                <td style="width:60%; border: 1px solid; padding-left:5px">{{$riwayat->nama_mahasiswa ?? '-'}}</td>
             </tr>
             <tr>
                 <td>NIM</td>
-                <td style="width:60%; border: 1px solid;"></td>
+                <td style="width:60%; border: 1px solid; padding-left:5px">{{$riwayat->nim ?? '-'}}</td>
             </tr>
             <tr>
                 <td>JURUSAN/PRODI</td>
-                <td style="width:60%; border: 1px solid;"></td>
+                <td style="width:60%; border: 1px solid; padding-left:5px">
+                    {{strtoupper($riwayat->prodi->nama_jenjang_pendidikan ?? '-' )}} - {{strtoupper($riwayat->prodi->nama_program_studi ?? '-' )}}
+                </td>
             </tr>
             <tr>
                 <td>FAKULTAS/PROGRAM</td>
-                <td style="width:60%; border: 1px solid;"></td>
+                <td style="width:60%; border: 1px solid; padding-left:5px">{{strtoupper($riwayat->prodi->fakultas->nama_fakultas ?? '-')}}</td>
             </tr>
         </table>
     </div>
