@@ -2004,7 +2004,8 @@ class FeederUploadController extends Controller
                     });
             })
             ->join('program_studis as p', 'p.id_prodi', 'rp.id_prodi')
-            ->where('biodata_mahasiswas.id_mahasiswa', '8ba87259-4e55-4910-a20b-8041534feefb' )
+            // ->where('biodata_mahasiswas.id_mahasiswa', '8ba87259-4e55-4910-a20b-8041534feefb' )
+            ->where('biodata_mahasiswas.feeder', 0)
             ->select(
                 'biodata_mahasiswas.*',
                 'rp.id_registrasi_mahasiswa',
@@ -2147,7 +2148,7 @@ class FeederUploadController extends Controller
 
                     $d->update([
                         'feeder' => 1,
-                        'status_sync' => 'Berhasil sync'
+                        'status_sync' => 'Sudah sync'
                     ]);
 
                     $dataBerhasil++;

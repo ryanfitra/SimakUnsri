@@ -114,6 +114,7 @@ FEEDER UPLOAD - BIODATA MAHASISWA
                                     <th class="text-center align-middle">NIM</th>
                                     <th class="text-center align-middle">Nama Mahasiswa</th>
 
+                                    <th class="text-center align-middle">NIK</th>
                                     <th class="text-center align-middle">Jalan</th>
                                     <th class="text-center align-middle">Dusun</th>
                                     <th class="text-center align-middle">RT</th>
@@ -196,6 +197,7 @@ FEEDER UPLOAD - BIODATA MAHASISWA
                     html += '<td class="text-start">' + item.nama_mahasiswa + '</td>';
 
                     // alamat utama
+                    html += '<td>' + (item.nik ?? '-') + '</td>';
                     html += '<td>' + (item.jalan ?? '-') + '</td>';
                     html += '<td>' + (item.dusun ?? '-') + '</td>';
                     html += '<td>' + (item.rt ?? '-') + '</td>';
