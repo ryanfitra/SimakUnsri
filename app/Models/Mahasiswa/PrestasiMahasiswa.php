@@ -7,7 +7,7 @@ use App\Models\Referensi\JenisPrestasi;
 use App\Models\Referensi\TingkatPrestasi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\SKPI;
 class PrestasiMahasiswa extends Model
 {
     use HasFactory;
@@ -31,5 +31,10 @@ class PrestasiMahasiswa extends Model
     public function biodata_mahasiswa()
     {
         return $this->belongsTo(BiodataMahasiswa::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
+
+    public function skpi()
+    {
+        return $this->hasOne(SKPI::class, 'id_prestasi', 'id_prestasi');
     }
 }
